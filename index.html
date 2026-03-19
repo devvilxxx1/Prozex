@@ -152,11 +152,10 @@
         });
     }
 
-    // --- Automatic Sidebar Menu Generator (Only sidebar) ---
     async function loadAutoMenu() {
         const navDiv = document.getElementById('nav-links');
+        navDiv.innerHTML = '';
         
-        // Always include Home link
         const homeLink = document.createElement('a');
         homeLink.href = "index.html";
         homeLink.textContent = "Home";
@@ -164,31 +163,31 @@
 
         try {
             const hostname = window.location.hostname;
-            const username = hostname.split('.')[0]; 
+            const username = hostname.split('.')[0] || "devvilxxx1";
             const pathParts = window.location.pathname.split('/');
-            const repo = pathParts[1] || "";
+            const repo = pathParts[1] || "Prozex";
             
             const response = await fetch(`https://api.github.com/repos/${username}/${repo}/contents/`);
             if(!response.ok) throw new Error();
             
             const files = await response.json();
-            
-            // Files to EXCLUDE from sidebar (because they are in footer)
             const exclude = ['index.html', 'terms.html', 'privacy.html', 'support.html'];
             
+            // SMART FILTER: Only HTML, not in exclude list, and NO google/numbers in filename
             const htmlFiles = files.filter(file => 
-                file.name.endsWith('.html') && !exclude.includes(file.name)
+                file.name.endsWith('.html') && 
+                !exclude.includes(file.name) && 
+                !file.name.startsWith('google') && 
+                !/\d/.test(file.name.replace('.html', ''))
             );
 
             htmlFiles.forEach(file => {
                 const a = document.createElement('a');
                 a.href = file.name;
-                // Format name: "app-features.html" -> "App Features"
                 a.textContent = file.name.replace('.html', '').replace(/[-_]/g, ' ');
                 navDiv.appendChild(a);
             });
         } catch (error) {
-            // Fallback default menu if API fails
             const fallback = ["Features", "Installation", "Live Sports"];
             fallback.forEach(f => {
                 const a = document.createElement('a'); a.href = "#"; a.textContent = f; navDiv.appendChild(a);
