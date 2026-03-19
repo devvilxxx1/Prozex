@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function() {
-    // ১. প্রয়োজনীয় CSS সরাসরি ইনজেক্ট করা (যাতে ডিজাইন না ভাঙে)
+    // ১. প্রয়োজনীয় CSS সরাসরি ইনজেক্ট করা
     const styles = `
     <style>
         :root { --main-blue: #00417b; --neon-cyan: #00e5ff; }
@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", function() {
     document.body.insertAdjacentHTML('afterbegin', headerHTML);
     document.body.insertAdjacentHTML('beforeend', footerHTML);
 
-    // ৪. সাইডবার মেনু আইটেম (লিঙ্কগুলো ঠিক করা হয়েছে)
+    // ৪. সাইডবার মেনু আইটেম (লিস্টটি এখন পুরোপুরি নিরাপদ)
     const navItems = [
         { name: "Home", url: "index.html" },
         { name: "App Features", url: "features.html" },
@@ -61,6 +61,8 @@ document.addEventListener("DOMContentLoaded", function() {
     ];
 
     const navDiv = document.getElementById('nav-links');
+    
+    // শুধু আপনার দেওয়া নির্দিষ্ট ৫টি পেজই মেনুতে দেখাবে
     navItems.forEach(item => {
         const a = document.createElement('a');
         a.href = item.url;
