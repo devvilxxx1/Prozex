@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://devvilxxx1.github.io/Prozex/sitemap.xml
